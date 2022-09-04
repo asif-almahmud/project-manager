@@ -1,4 +1,4 @@
-import { Boards } from "../../../types/types";
+import { Boards, IBoard } from "../../../types/types";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 const addNewBoard = (
@@ -48,4 +48,11 @@ const editBoard = (
   });
 };
 
-export { addNewBoard, deleteBoard, editBoard };
+const onBoardDragAndDrop = (state: Boards, action: PayloadAction<Boards>) => {
+  for (let board of action.payload) {
+    state.shift();
+    state.push(board);
+  }
+};
+
+export { addNewBoard, deleteBoard, editBoard, onBoardDragAndDrop };

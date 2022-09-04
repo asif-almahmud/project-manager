@@ -5,6 +5,7 @@ import {
   addNewBoard as addBoard,
   editBoard as updateBoard,
   deleteBoard as removeBoard,
+  onBoardDragAndDrop as hadleBoardDragAndDrop,
 } from "./actionCreators/board";
 import {
   addNewColumn as addColumn,
@@ -50,6 +51,9 @@ export const boardsSlice = createSlice({
     addNewCard: addCard,
     deleteCard: removeCard,
     editCard: updateCard,
+    onBoardDragAndDrop: hadleBoardDragAndDrop,
+    // onColumnDragAndDrop:hadleColumnDragAndDrop,
+    // onCardDragAndDrop:hadleCardDragAndDrop,
   },
 });
 
@@ -64,5 +68,6 @@ export const {
   addNewCard,
   editCard,
   deleteCard,
+  onBoardDragAndDrop,
 } = boardsSlice.actions;
 export default boardsSlice.reducer;

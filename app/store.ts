@@ -2,25 +2,21 @@ import { configureStore } from "@reduxjs/toolkit";
 import cakeReducer from "../features/cake/cakeSlice";
 import icecreamReducer from "../features/icecream/icecreamSlice";
 import userReducer from "../features/user/userSlice";
+import boardsReducer from "../features/boards/boardsSlice";
+import menuReducer from "../features/menu/menuSlice";
 
 export const store = configureStore({
   reducer: {
-    cake: cakeReducer,
-    icecream: icecreamReducer,
-    user: userReducer,
+    boards: boardsReducer,
+    menu: menuReducer,
     // So the state supplied from the store will be like -
     // {
-    //   cake: {
-    //      numberOfCakes: 0
+    //   boards: {
+    //      ...
     //   },
-    //   icecream: {
-    //      numberOfIcecreams: 0
+    //   menu: {
+    //      ...
     //   },
-    //   user: {
-    //      entities: [],
-    //      loading: false,
-    //      error: ""
-    //   }
     // }
   },
 });
