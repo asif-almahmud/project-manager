@@ -31,7 +31,11 @@ const BoardsSummary = (props: Props) => {
           }`}
         >
           {boards.map((board, index) => (
-            <Draggable draggableId={board.title} index={index} key={uuidv4()}>
+            <Draggable
+              draggableId={board.title + index}
+              index={index}
+              key={uuidv4()}
+            >
               {(draggableProvided, draggableSnapshot) => (
                 <div
                   ref={draggableProvided.innerRef}
