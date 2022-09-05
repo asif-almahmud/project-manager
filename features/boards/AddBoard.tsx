@@ -24,10 +24,10 @@ export const AddBoard = (props: Props) => {
   return (
     <>
       {openForm && (
-        <div className="w-11/12 h-14 sm:h-16 md:h-20 lg:h-24 xl:h-28 border border-gray-400   rounded-md text-lg text-gray-300">
+        <div className="w-11/12 h-24 md:h-20 lg:h-24 xl:h-28 border border-gray-400   rounded-md text-lg text-gray-300">
           <form
             onSubmit={handleSubmit}
-            className="flex flex-col justify-center items-center gap-2 lg:gap-4 h-14 sm:h-16 md:h-20 lg:h-24 xl:h-28"
+            className="flex flex-col justify-center items-center gap-2 lg:gap-4 h-24 md:h-20 lg:h-24 xl:h-28"
           >
             <input
               autoFocus
@@ -36,7 +36,7 @@ export const AddBoard = (props: Props) => {
               value={boardTitle}
               onChange={handleChange}
               required
-              className="w-4/5 self-center bg-gray-500 px-2 rounded-md text-gray-200 focus:outline focus:outline-2 focus:outline-gray-400 focus:border-none h-6 lg:h-auto"
+              className="w-4/5 self-center bg-gray-500 px-2 rounded-md text-gray-200 focus:outline focus:outline-2 focus:outline-green-400 focus:border-none h-6 lg:h-auto"
             />
             <input
               type="submit"
@@ -48,10 +48,10 @@ export const AddBoard = (props: Props) => {
       )}
       {!openForm && (
         <div
-          className="w-11/12 h-14 sm:h-16 md:h-20 lg:h-24 xl:h-28 flex justify-center items-center border border-gray-500 rounded-md cursor-pointer text-[48px] text-gray-500 hover:border-gray-400 hover:text-gray-300"
+          className="w-11/12 h-24 md:h-20 lg:h-24 xl:h-28 flex justify-center items-center border border-gray-500 rounded-md cursor-pointer text-[48px] text-gray-500 hover:border-gray-400 hover:text-gray-300"
           onClick={() => setOpenForm(true)}
         >
-          <FaPlus className="p-4 h-14 sm:h-16 md:h-20 lg:h-24 xl:h-28" />
+          <FaPlus className="p-4 h-24 md:h-20 lg:h-24 xl:h-28" />
         </div>
       )}
     </>

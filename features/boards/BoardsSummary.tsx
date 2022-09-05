@@ -26,8 +26,10 @@ const BoardsSummary = (props: Props) => {
         <div
           ref={doppableProvided.innerRef}
           {...doppableProvided.droppableProps}
-          className={`h-screen overflow-y-auto p-6 pb-24 flex flex-col flex-nowrap gap-6  ${
-            droppableSnapshot.isDraggingOver ? "bg-gray-700" : ""
+          className={`md:h-screen overflow-y-auto p-6 pb-24 flex flex-col flex-nowrap gap-6  ${
+            droppableSnapshot.isDraggingOver
+              ? "bg-gray-700 border-2 border-gray-200 rounded-sm overflow-hidden"
+              : ""
           }`}
         >
           {boards.map((board, index) => (

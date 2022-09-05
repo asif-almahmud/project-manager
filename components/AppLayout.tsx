@@ -10,6 +10,7 @@ import { onBoardDragAndDrop } from "../features/boards/boardsSlice";
 import { Boards } from "../types/types";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 
 const BoardsSummary = dynamic(
   () => import("../features/boards/BoardsSummary"),
@@ -23,6 +24,8 @@ interface IAppLayoutProps {
 export const AppLayout: FC<IAppLayoutProps> = ({ children }) => {
   const boards = useAppSelector((state) => state.boards);
   const dispatch = useAppDispatch();
+  const { query } = useRouter();
+  console.log({ query });
 
   const handleDragAndDrop = (result: DropResult) => {
     console.log({ dropResult: result });
@@ -61,17 +64,21 @@ export const AppLayout: FC<IAppLayoutProps> = ({ children }) => {
     dispatch(onBoardDragAndDrop(allBoards));
   };
   return (
-    <div className="h-screen bg-gray-800 text-gray-50 flex ">
-      {/* for "md" and large */}
-      <DragDropContext onDragEnd={handleDragAndDrop}>
-        <div className="w-1/5 hidden md:block border-r border-r-gray-400 overflow-y-auto overflow-x-hidden">
+    <DragDropContext onDragEnd={handleDragAndDrop}>
+      <div className="min-h-screen bg-gray-800 text-gray-50 flex flex-col items-center md:flex-row-reverse ">
+        {/* for "md" and large */}
+
+        <div className="w-full md:w-3/4 lg:w-4/5 p-8 pt-16 md:pt-0  md:h-screen flex justify-center md:items-center  md:overflow-x-auto md:overflow-y-hidden">
+          {children}
+        </div>
+
+        <div className="w-4/5 sm:w-3/5 md:w-1/4 lg:w-1/5 p-8 pt-0 md:p-0  md:block md:border-r border-r-gray-400 md:overflow-y-auto md:overflow-x-hidden">
           <BoardsSummary />
         </div>
-      </DragDropContext>
-      <div className="w-4/5 h-screen flex justify-center items-center  overflow-x-auto overflow-y-hidden">
-        {children}
+
+        {/* for smaller than "md" */}
       </div>
-      {/* for smaller than "md" */}
-    </div>
+    </DragDropContext>
   );
 };
+// flex-row-reverse md:flex-col
