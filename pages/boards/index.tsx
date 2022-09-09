@@ -8,7 +8,10 @@ const Boards = (props: Props) => {
   return (
     <>
       <div className="hidden md:block text-green-400 text-3xl font-semibold">
-        Select A Board
+        Select A Board To Start With
+      </div>
+      <div className=" md:hidden text-green-400 text-3xl font-semibold">
+        Boards List
       </div>
     </>
   );

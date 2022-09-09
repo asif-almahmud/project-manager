@@ -1,4 +1,5 @@
-import { Boards } from "../../../types/types";
+import { Boards, Columns } from "../../../types/types";
+import { current } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 const addNewColumn = (
@@ -14,13 +15,14 @@ const addNewColumn = (
     id: action.payload.columnId,
     title: action.payload.columnTitle,
     cards: [
-      {
-        id: "",
-        title: "",
-        details: "",
-      },
+      // {
+      //   id: "",
+      //   title: "",
+      //   details: "",
+      // },
     ],
   };
+
   state.forEach((item) => {
     if (item.id === boardId) {
       item.columns.push(newColumn);
@@ -75,4 +77,20 @@ const editColumn = (
   });
 };
 
-export { addNewColumn, deleteColumn, editColumn };
+const onColumnDragAndDrop = (
+  state: Boards,
+  action: PayloadAction<{ boardId: string; columns: Columns }>
+) => {
+  const boardId = action.payload.boardId;
+  const columns = action.payload.columns;
+  for (let board of state) {
+    if (board.id === boardId) {
+      for (let column of columns) {
+        board.columns.shift();
+        board.columns.push(column);
+      }
+    }
+  }
+};
+
+export { addNewColumn, deleteColumn, editColumn, onColumnDragAndDrop };

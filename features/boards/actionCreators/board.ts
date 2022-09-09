@@ -9,17 +9,17 @@ const addNewBoard = (
     id: action.payload.boardId,
     title: action.payload.boardTitle,
     columns: [
-      {
-        id: "",
-        title: "",
-        cards: [
-          {
-            id: "",
-            title: "",
-            details: "",
-          },
-        ],
-      },
+      // {
+      //   id: "",
+      //   title: "",
+      //   cards: [
+      //     {
+      //       id: "",
+      //       title: "",
+      //       details: "",
+      //     },
+      //   ],
+      // },
     ],
   };
   state.push(newBoard);

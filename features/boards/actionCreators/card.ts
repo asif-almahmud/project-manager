@@ -1,4 +1,5 @@
 import { Boards } from "../../../types/types";
+import { current } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 const addNewCard = (
@@ -21,15 +22,26 @@ const addNewCard = (
     title: cardTitle,
     details: cardDetails,
   };
+  console.log({ newCard });
+  console.log({ state: current(state) });
   state.forEach((board) => {
+    console.log({ board: current(board) });
     if (board.id === boardId) {
+      console.log({ board: current(board) });
       board.columns.forEach((column) => {
+        console.log({ column });
         if (column.id === columnId) {
+          console.log({ newCard });
           column.cards.push(newCard);
         }
+        console.log({ column });
       });
     }
   });
+  // for(let board of state){
+  //   console.log({ board: current(board) });
+  //   if(board.id)
+  // }
 };
 
 const deleteCard = (

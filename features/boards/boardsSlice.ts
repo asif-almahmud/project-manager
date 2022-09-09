@@ -1,16 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
 import { Boards } from "../../types/types";
 import {
   addNewBoard as addBoard,
   editBoard as updateBoard,
   deleteBoard as removeBoard,
-  onBoardDragAndDrop as hadleBoardDragAndDrop,
+  onBoardDragAndDrop as handleBoardDragAndDrop,
 } from "./actionCreators/board";
 import {
   addNewColumn as addColumn,
   editColumn as updateColumn,
   deleteColumn as removeColumn,
+  onColumnDragAndDrop as handleColumnDragAndDrop,
 } from "./actionCreators/column";
 import {
   addNewCard as addCard,
@@ -25,12 +25,12 @@ const initialState: Boards = [
     columns: [
       {
         id: "1",
-        title: "Backlogs",
+        title: "Backlog",
         cards: [
           {
             id: "1",
             title: "Initial Setup",
-            details: "MERN Stack with TypeScript and Nextjs",
+            details: "MERN Stack with TypeScript, Nextjs and Redux Toolkit",
           },
         ],
       },
@@ -51,9 +51,9 @@ export const boardsSlice = createSlice({
     addNewCard: addCard,
     deleteCard: removeCard,
     editCard: updateCard,
-    onBoardDragAndDrop: hadleBoardDragAndDrop,
-    // onColumnDragAndDrop:hadleColumnDragAndDrop,
-    // onCardDragAndDrop:hadleCardDragAndDrop,
+    onBoardDragAndDrop: handleBoardDragAndDrop,
+    onColumnDragAndDrop: handleColumnDragAndDrop,
+    // onCardDragAndDrop:handleCardDragAndDrop,
   },
 });
 
@@ -69,5 +69,6 @@ export const {
   editCard,
   deleteCard,
   onBoardDragAndDrop,
+  onColumnDragAndDrop,
 } = boardsSlice.actions;
 export default boardsSlice.reducer;

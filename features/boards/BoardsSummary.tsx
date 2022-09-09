@@ -44,10 +44,12 @@ const BoardsSummary = (props: Props) => {
                   {...draggableProvided.draggableProps}
                   {...draggableProvided.dragHandleProps}
                   className={`${
-                    draggableSnapshot.isDragging ? "drop-shadow-2xl" : ""
+                    draggableSnapshot.isDragging
+                      ? "drop-shadow-2xl cursor-grabbing"
+                      : ""
                   }`}
                 >
-                  <Board title={board.title} key={board.title} />
+                  <Board title={board.title} id={board.id} key={board.title} />
                 </div>
               )}
             </Draggable>

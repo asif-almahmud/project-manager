@@ -6,11 +6,16 @@ import {
   Droppable,
 } from "react-beautiful-dnd";
 import { v4 as uuidv4 } from "uuid";
-import { onBoardDragAndDrop } from "../features/boards/boardsSlice";
-import { Boards } from "../types/types";
+import {
+  onBoardDragAndDrop,
+  onColumnDragAndDrop,
+} from "../features/boards/boardsSlice";
+import { Boards, Columns } from "../types/types";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
+import { getColumns } from "../utils/getColumns";
+import { getDataById } from "../utils/getDataById";
 
 const BoardsSummary = dynamic(
   () => import("../features/boards/BoardsSummary"),
@@ -24,8 +29,13 @@ interface IAppLayoutProps {
 export const AppLayout: FC<IAppLayoutProps> = ({ children }) => {
   const boards = useAppSelector((state) => state.boards);
   const dispatch = useAppDispatch();
-  const { query } = useRouter();
-  console.log({ query });
+  const {
+    query: { boardId: id },
+  } = useRouter();
+  const boardId = id as string;
+
+  const { columns } = getDataById(boardId);
+  console.log({ columns });
 
   const handleDragAndDrop = (result: DropResult) => {
     console.log({ dropResult: result });
@@ -38,41 +48,74 @@ export const AppLayout: FC<IAppLayoutProps> = ({ children }) => {
     )
       return;
 
-    console.log({ destination, source });
+    //~ Drag and Drop between boards
+    if (destination?.droppableId === "BoardsList") {
+      console.log({ destination, source });
 
-    let dIndex = destination?.index as number;
-    let sIndex = source?.index;
+      let dIndex = destination.index;
+      let sIndex = source.index;
 
-    let allBoards: Boards = [];
-    let selected = boards[source.index];
-    for (let i = 0; i < boards.length; i++) {
-      if (i === destination.index) {
-        if (sIndex > dIndex) {
-          allBoards.push(selected);
-          allBoards.push(boards[i]);
+      let allBoards: Boards = [];
+      let selected = boards[source.index];
+      for (let i = 0; i < boards.length; i++) {
+        if (i === destination.index) {
+          if (sIndex > dIndex) {
+            allBoards.push(selected);
+            allBoards.push(boards[i]);
+          } else {
+            allBoards.push(boards[i]);
+            allBoards.push(selected);
+          }
+        } else if (i === source.index) {
+          continue;
         } else {
           allBoards.push(boards[i]);
-          allBoards.push(selected);
         }
-      } else if (i === source.index) {
-        continue;
-      } else {
-        allBoards.push(boards[i]);
       }
+
+      dispatch(onBoardDragAndDrop(allBoards));
     }
 
-    dispatch(onBoardDragAndDrop(allBoards));
+    //~ Drag and Drop between Columns
+    if (destination?.droppableId.includes("ColumnsList-of-")) {
+      console.log("ColumnsList-of-");
+
+      let dIndex = destination.index;
+      let sIndex = source.index;
+
+      let allColumns: Columns = [];
+      let selected = columns[source.index];
+      for (let i = 0; i < columns.length; i++) {
+        if (i === dIndex) {
+          if (sIndex > dIndex) {
+            allColumns.push(selected);
+            allColumns.push(columns[i]);
+          } else {
+            allColumns.push(columns[i]);
+            allColumns.push(selected);
+          }
+        } else if (i === sIndex) {
+          continue;
+        } else {
+          allColumns.push(columns[i]);
+        }
+      }
+
+      dispatch(onColumnDragAndDrop({ boardId, columns: allColumns }));
+    }
   };
   return (
     <DragDropContext onDragEnd={handleDragAndDrop}>
       <div className="min-h-screen bg-gray-800 text-gray-50 flex flex-col items-center md:flex-row-reverse ">
         {/* for "md" and large */}
 
-        <div className="w-full md:w-3/4 lg:w-4/5 p-8 pt-16 md:pt-0  md:h-screen flex justify-center md:items-center  md:overflow-x-auto md:overflow-y-hidden">
-          {children}
-        </div>
+        <div className={`w-full md:w-3/4 lg:w-4/5 `}>{children}</div>
 
-        <div className="w-4/5 sm:w-3/5 md:w-1/4 lg:w-1/5 p-8 pt-0 md:p-0  md:block md:border-r border-r-gray-400 md:overflow-y-auto md:overflow-x-hidden">
+        <div
+          className={`${
+            boardId ? "hidden md:block" : ""
+          } w-4/5 sm:w-3/5 md:w-1/4 lg:w-1/5 p-8 pt-0 md:p-0  md:block md:border-r border-r-gray-400 md:overflow-y-auto md:overflow-x-hidden`}
+        >
           <BoardsSummary />
         </div>
 
