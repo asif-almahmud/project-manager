@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from "uuid";
 import {
   onBoardDragAndDrop,
   onCardDragAndDropInSameColumn,
+  onCardDragAndDropIntoDifferentColumns,
   onColumnDragAndDrop,
 } from "../features/boards/boardsSlice";
 import { Boards, Cards, Columns } from "../types/types";
@@ -49,49 +50,49 @@ export const AppLayout: FC<IAppLayoutProps> = ({ children }) => {
 
     //~ Drag and Drop of boards
     if (destination?.droppableId === "BoardsList") {
-      let allBoards: Boards = [];
+      let updatedBoards: Boards = [];
       let selected = boards[sIndex];
       for (let i = 0; i < boards.length; i++) {
         if (i === dIndex) {
           if (sIndex > dIndex) {
-            allBoards.push(selected);
-            allBoards.push(boards[i]);
+            updatedBoards.push(selected);
+            updatedBoards.push(boards[i]);
           } else {
-            allBoards.push(boards[i]);
-            allBoards.push(selected);
+            updatedBoards.push(boards[i]);
+            updatedBoards.push(selected);
           }
         } else if (i === sIndex) {
           continue;
         } else {
-          allBoards.push(boards[i]);
+          updatedBoards.push(boards[i]);
         }
       }
 
-      dispatch(onBoardDragAndDrop(allBoards));
+      dispatch(onBoardDragAndDrop(updatedBoards));
     }
 
     //~ Drag and Drop of Columns
     if (destination?.droppableId.includes("BoardId")) {
       const columns = getColumns(boardId);
-      let allColumns: Columns = [];
+      let updatedColumns: Columns = [];
       let selected = columns[sIndex];
       for (let i = 0; i < columns.length; i++) {
         if (i === dIndex) {
           if (sIndex > dIndex) {
-            allColumns.push(selected);
-            allColumns.push(columns[i]);
+            updatedColumns.push(selected);
+            updatedColumns.push(columns[i]);
           } else {
-            allColumns.push(columns[i]);
-            allColumns.push(selected);
+            updatedColumns.push(columns[i]);
+            updatedColumns.push(selected);
           }
         } else if (i === sIndex) {
           continue;
         } else {
-          allColumns.push(columns[i]);
+          updatedColumns.push(columns[i]);
         }
       }
 
-      dispatch(onColumnDragAndDrop({ boardId, columns: allColumns }));
+      dispatch(onColumnDragAndDrop({ boardId, columns: updatedColumns }));
     }
 
     //~ Drag and Drop of Cards
@@ -102,31 +103,67 @@ export const AppLayout: FC<IAppLayoutProps> = ({ children }) => {
       const sCards = getCards(boardId, sColumnId);
       console.log({ dCards, sCards });
 
-      let allSCards: Cards = [];
-      let allDCards: Cards = [];
+      let updatedSourceCards: Cards = [];
+      let updatedDestinationCards: Cards = [];
       let selected = sCards[sIndex];
 
       if (dColumnId === sColumnId) {
         for (let i = 0; i < sCards.length; i++) {
           if (i === dIndex) {
             if (sIndex > dIndex) {
-              allSCards.push(selected);
-              allSCards.push(sCards[i]);
+              updatedSourceCards.push(selected);
+              updatedSourceCards.push(sCards[i]);
             } else {
-              allSCards.push(sCards[i]);
-              allSCards.push(selected);
+              updatedSourceCards.push(sCards[i]);
+              updatedSourceCards.push(selected);
             }
           } else if (i === sIndex) {
             continue;
           } else {
-            allSCards.push(sCards[i]);
+            updatedSourceCards.push(sCards[i]);
           }
         }
+
+        console.log("in the same column");
         dispatch(
           onCardDragAndDropInSameColumn({
             boardId,
             columnId: sColumnId,
-            cards: allSCards,
+            cards: updatedSourceCards,
+          })
+        );
+      } else {
+        for (let i = 0; i < sCards.length; i++) {
+          if (i === sIndex) {
+            continue;
+          } else {
+            updatedSourceCards.push(sCards[i]);
+          }
+        }
+
+        if (dIndex === dCards.length) {
+          updatedDestinationCards = [...dCards, selected];
+        } else {
+          for (let i = 0; i < dCards.length; i++) {
+            if (i === dIndex) {
+              updatedDestinationCards.push(selected);
+              updatedDestinationCards.push(dCards[i]);
+            } else {
+              updatedDestinationCards.push(dCards[i]);
+            }
+          }
+        }
+
+        console.log("in different columns");
+        console.log({ updatedSourceCards, updatedDestinationCards });
+
+        dispatch(
+          onCardDragAndDropIntoDifferentColumns({
+            boardId,
+            sColumnId: sColumnId,
+            dColumnId: dColumnId,
+            sCards: updatedSourceCards,
+            dCards: updatedDestinationCards,
           })
         );
       }

@@ -17,6 +17,7 @@ import {
   editCard as updateCard,
   deleteCard as removeCard,
   onCardDragAndDropInSameColumn as handleCardDragAndDropInSameColumn,
+  onCardDragAndDropIntoDifferentColumns as handleCardDragAndDropIntoDifferentColumns,
 } from "./actionCreators/card";
 
 const initialState: Boards = [
@@ -55,7 +56,8 @@ export const boardsSlice = createSlice({
     onBoardDragAndDrop: handleBoardDragAndDrop,
     onColumnDragAndDrop: handleColumnDragAndDrop,
     onCardDragAndDropInSameColumn: handleCardDragAndDropInSameColumn,
-    // onCardDragAndDrop:handleCardDragAndDrop,
+    onCardDragAndDropIntoDifferentColumns:
+      handleCardDragAndDropIntoDifferentColumns,
   },
 });
 
@@ -73,5 +75,6 @@ export const {
   onBoardDragAndDrop,
   onColumnDragAndDrop,
   onCardDragAndDropInSameColumn,
+  onCardDragAndDropIntoDifferentColumns,
 } = boardsSlice.actions;
 export default boardsSlice.reducer;

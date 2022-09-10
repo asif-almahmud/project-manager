@@ -140,4 +140,54 @@ const onCardDragAndDropInSameColumn = (
   }
 };
 
-export { addNewCard, deleteCard, editCard, onCardDragAndDropInSameColumn };
+const onCardDragAndDropIntoDifferentColumns = (
+  state: Boards,
+  action: PayloadAction<{
+    boardId: string;
+    sColumnId: string;
+    dColumnId: string;
+    sCards: Cards;
+    dCards: Cards;
+  }>
+) => {
+  const boardId = action.payload.boardId;
+  const sColumnId = action.payload.sColumnId;
+  const dColumnId = action.payload.dColumnId;
+  const sCards = action.payload.sCards;
+  const dCards = action.payload.dCards;
+
+  for (let board of state) {
+    if (board.id === boardId) {
+      for (let column of board.columns) {
+        if (column.id === sColumnId) {
+          let length = column.cards.length;
+          for (let i = 0; i < length; i++) {
+            column.cards.shift();
+          }
+
+          for (let card of sCards) {
+            column.cards.push(card);
+          }
+        }
+
+        if (column.id === dColumnId) {
+          let length = column.cards.length;
+          for (let i = 0; i < length; i++) {
+            column.cards.shift();
+          }
+          for (let card of dCards) {
+            column.cards.push(card);
+          }
+        }
+      }
+    }
+  }
+};
+
+export {
+  addNewCard,
+  deleteCard,
+  editCard,
+  onCardDragAndDropInSameColumn,
+  onCardDragAndDropIntoDifferentColumns,
+};
