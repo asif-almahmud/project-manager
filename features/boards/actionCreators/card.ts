@@ -1,4 +1,4 @@
-import { Boards } from "../../../types/types";
+import { Boards, Cards, Columns } from "../../../types/types";
 import { current } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
@@ -114,4 +114,30 @@ const editCard = (
   });
 };
 
-export { addNewCard, deleteCard, editCard };
+const onCardDragAndDropInSameColumn = (
+  state: Boards,
+  action: PayloadAction<{
+    boardId: string;
+    columnId: string;
+    cards: Cards;
+  }>
+) => {
+  const boardId = action.payload.boardId;
+  const columnId = action.payload.columnId;
+  const cards = action.payload.cards;
+
+  for (let board of state) {
+    if (board.id === boardId) {
+      for (let column of board.columns) {
+        if (column.id === columnId) {
+          for (let card of cards) {
+            column.cards.shift();
+            column.cards.push(card);
+          }
+        }
+      }
+    }
+  }
+};
+
+export { addNewCard, deleteCard, editCard, onCardDragAndDropInSameColumn };

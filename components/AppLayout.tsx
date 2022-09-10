@@ -8,14 +8,14 @@ import {
 import { v4 as uuidv4 } from "uuid";
 import {
   onBoardDragAndDrop,
+  onCardDragAndDropInSameColumn,
   onColumnDragAndDrop,
 } from "../features/boards/boardsSlice";
-import { Boards, Columns } from "../types/types";
+import { Boards, Cards, Columns } from "../types/types";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import { getColumns } from "../utils/getColumns";
-import { getDataById } from "../utils/getDataById";
+import { getCards, getColumns } from "../utils/dataById";
 
 const BoardsSummary = dynamic(
   () => import("../features/boards/BoardsSummary"),
@@ -34,31 +34,25 @@ export const AppLayout: FC<IAppLayoutProps> = ({ children }) => {
   } = useRouter();
   const boardId = id as string;
 
-  const { columns } = getDataById(boardId);
-  console.log({ columns });
-
   const handleDragAndDrop = (result: DropResult) => {
     console.log({ dropResult: result });
     const { destination, source } = result;
 
+    let dIndex = destination?.index as number;
+    let sIndex = source.index;
+
+    console.log({ dIndex, sIndex });
+
     if (!destination) return;
-    if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
-    )
+    if (destination.droppableId === source.droppableId && dIndex === sIndex)
       return;
 
-    //~ Drag and Drop between boards
+    //~ Drag and Drop of boards
     if (destination?.droppableId === "BoardsList") {
-      console.log({ destination, source });
-
-      let dIndex = destination.index;
-      let sIndex = source.index;
-
       let allBoards: Boards = [];
-      let selected = boards[source.index];
+      let selected = boards[sIndex];
       for (let i = 0; i < boards.length; i++) {
-        if (i === destination.index) {
+        if (i === dIndex) {
           if (sIndex > dIndex) {
             allBoards.push(selected);
             allBoards.push(boards[i]);
@@ -66,7 +60,7 @@ export const AppLayout: FC<IAppLayoutProps> = ({ children }) => {
             allBoards.push(boards[i]);
             allBoards.push(selected);
           }
-        } else if (i === source.index) {
+        } else if (i === sIndex) {
           continue;
         } else {
           allBoards.push(boards[i]);
@@ -76,15 +70,11 @@ export const AppLayout: FC<IAppLayoutProps> = ({ children }) => {
       dispatch(onBoardDragAndDrop(allBoards));
     }
 
-    //~ Drag and Drop between Columns
-    if (destination?.droppableId.includes("ColumnsList-of-")) {
-      console.log("ColumnsList-of-");
-
-      let dIndex = destination.index;
-      let sIndex = source.index;
-
+    //~ Drag and Drop of Columns
+    if (destination?.droppableId.includes("BoardId")) {
+      const columns = getColumns(boardId);
       let allColumns: Columns = [];
-      let selected = columns[source.index];
+      let selected = columns[sIndex];
       for (let i = 0; i < columns.length; i++) {
         if (i === dIndex) {
           if (sIndex > dIndex) {
@@ -103,7 +93,46 @@ export const AppLayout: FC<IAppLayoutProps> = ({ children }) => {
 
       dispatch(onColumnDragAndDrop({ boardId, columns: allColumns }));
     }
+
+    //~ Drag and Drop of Cards
+    if (destination?.droppableId.includes("ColumnId")) {
+      const dColumnId = destination.droppableId.split("-").slice(1).join("-");
+      const sColumnId = source.droppableId.split("-").slice(1).join("-");
+      const dCards = getCards(boardId, dColumnId);
+      const sCards = getCards(boardId, sColumnId);
+      console.log({ dCards, sCards });
+
+      let allSCards: Cards = [];
+      let allDCards: Cards = [];
+      let selected = sCards[sIndex];
+
+      if (dColumnId === sColumnId) {
+        for (let i = 0; i < sCards.length; i++) {
+          if (i === dIndex) {
+            if (sIndex > dIndex) {
+              allSCards.push(selected);
+              allSCards.push(sCards[i]);
+            } else {
+              allSCards.push(sCards[i]);
+              allSCards.push(selected);
+            }
+          } else if (i === sIndex) {
+            continue;
+          } else {
+            allSCards.push(sCards[i]);
+          }
+        }
+        dispatch(
+          onCardDragAndDropInSameColumn({
+            boardId,
+            columnId: sColumnId,
+            cards: allSCards,
+          })
+        );
+      }
+    }
   };
+
   return (
     <DragDropContext onDragEnd={handleDragAndDrop}>
       <div className="min-h-screen bg-gray-800 text-gray-50 flex flex-col items-center md:flex-row-reverse ">

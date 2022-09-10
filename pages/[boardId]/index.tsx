@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import React from "react";
 import { AddColumn } from "../../components/AddColumn";
 import { AppLayout } from "../../components/AppLayout";
-import { Column } from "../../components/Column";
 import { useGetBoardById } from "../../hooks/useGetBoardById";
 const DroppableColumns = dynamic(
   () => import("../../components/DroppableColumns"),

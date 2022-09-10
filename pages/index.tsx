@@ -47,20 +47,16 @@ const Home: NextPage = () => {
           Welcome to Progressivo
         </h1>
         <ul className="text-md italic text-blue-300 list-disc ml-6">
-          <li className="hidden md:list-item">
-            Select a board from the left bar and start progress with Progressivo
-          </li>
           <li>Break a project or a work into small tasks</li>
 
-          <li>Add new task or remove when needed</li>
+          <li>Add new task or remove if needed</li>
 
           <li>
             Move the tasks to different lifecycle states ( task columns ) using
             drag and drop
           </li>
           <li>
-            You can also rearrange the boards and task columns using drag and
-            drop
+            If needed use drag and drop to reorder the boards and columns also.
           </li>
         </ul>
       </div>
