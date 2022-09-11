@@ -15,11 +15,11 @@ interface IDroppableCardsProps extends IColumn {
 }
 
 const DroppableCards = (props: IDroppableCardsProps) => {
-  const { boardId, id, title, cards } = props;
+  const { boardId, id: columnId, title, cards } = props;
 
   return (
     <Droppable
-      droppableId={`ColumnId-${id}`}
+      droppableId={`ColumnId-${columnId}`}
       direction="vertical"
       type={`droppableCards`}
       renderClone={(provided, snapshot, rubric) => (
@@ -63,14 +63,14 @@ const DroppableCards = (props: IDroppableCardsProps) => {
                         {...draggableProvided.dragHandleProps}
                         className={`${draggableSnapshot.isDragging ? " " : ""}`}
                       >
-                        <Card {...card} />
+                        <Card boardId={boardId} columnId={columnId} {...card} />
                       </div>
                     )}
                   </Draggable>
                 </div>
               ))}
               {droppableProvided.placeholder}
-              <AddCard boardId={boardId} columnId={id} />
+              <AddCard boardId={boardId} columnId={columnId} />
             </div>
           </div>
         </div>
