@@ -30,7 +30,7 @@ const Home: NextPage = () => {
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
 
-  const handleSideNavigationBar = () => {
+  const handleSidebarNavigation = () => {
     setOpen((prev) => !prev);
   };
 
@@ -43,8 +43,8 @@ const Home: NextPage = () => {
       </Head>
       {/* <AppLayout> */}
       <div>
-        <h1 className="mb-2 text-2xl sm:text-3xl md:text-4xl font-semibold text-green-300 border-b-2 border-b-green-200">
-          Welcome to Progressivo
+        <h1 className="mb-2 text-2xl sm:text-3xl md:text-3xl font-semibold text-green-300 border-b-2 border-b-green-200">
+          Progress with Progressivo
         </h1>
         <ul className="text-md italic text-blue-300 list-disc ml-6">
           <li>Break a project or a work into small tasks</li>

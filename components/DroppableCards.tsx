@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IColumn } from "../types/types";
 import { AddCard } from "./AddCard";
 import { Card } from "./Card";
@@ -9,6 +9,10 @@ import {
   Droppable,
 } from "react-beautiful-dnd";
 import { v4 as uuidv4 } from "uuid";
+import { Menu } from "@headlessui/react";
+import { useAppDispatch } from "../app/hooks";
+import { deleteColumn, editColumn } from "../features/boards/boardsSlice";
+import { DropdownMenu } from "./DropdownMenu";
 
 interface IDroppableCardsProps extends IColumn {
   boardId: string;
@@ -16,6 +20,22 @@ interface IDroppableCardsProps extends IColumn {
 
 const DroppableCards = (props: IDroppableCardsProps) => {
   const { boardId, id: columnId, title, cards } = props;
+  const [edit, setEdit] = useState(false);
+  const [columnTitle, setColumnTitle] = useState("");
+  const dispatch = useAppDispatch();
+
+  const handleSave = () => {
+    dispatch(editColumn({ boardId, columnId, columnTitle }));
+    setEdit(false);
+  };
+
+  const handleDelete = () => {
+    dispatch(deleteColumn({ boardId, columnId }));
+  };
+
+  useEffect(() => {
+    setColumnTitle(title);
+  }, [edit]);
 
   return (
     <Droppable
@@ -44,13 +64,41 @@ const DroppableCards = (props: IDroppableCardsProps) => {
         >
           <div className="p-2  md:w-56 flex flex-col justify-center  gap-4">
             <h2
-              className={`sticky top-0 w-full text-gray-200 border-b border-gray-500 font-semibold bg-gray-600 ${
+              className={`sticky top-0 w-full text-gray-200 border-b border-gray-500 font-semibold bg-gray-600 flex justify-between${
                 droppableSnapshot.isDraggingOver
                   ? " border-b-2 text-white border-gray-200 "
                   : ""
               }`}
             >
-              {title}
+              {!edit ? (
+                <div>{title}</div>
+              ) : (
+                <div className="flex flex-col gap-2 m-2">
+                  <input
+                    autoFocus
+                    type="text"
+                    value={columnTitle}
+                    onChange={(e) => setColumnTitle(e.target.value)}
+                    className="w-[100%] rounded-sm text-gray-700 font-normal px-1"
+                  />
+                  <div className="flex justify-center items-center gap-2 text-sm">
+                    <button
+                      className="border rounded-sm px-2"
+                      onClick={() => setEdit(false)}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      className="border rounded-sm px-2"
+                      onClick={handleSave}
+                    >
+                      Save
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              <DropdownMenu setEdit={setEdit} handleDelete={handleDelete} />
             </h2>
             <div className=" flex flex-col gap-2 ">
               {cards.map((card, index) => (

@@ -61,7 +61,6 @@ export const boardsSlice = createSlice({
   },
 });
 
-// Action creators are generated for each reducer function
 export const {
   addNewBoard,
   editBoard,
