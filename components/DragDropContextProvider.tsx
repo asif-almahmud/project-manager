@@ -1,11 +1,5 @@
 import React, { ReactNode, FC } from "react";
-import {
-  DragDropContext,
-  DropResult,
-  Draggable,
-  Droppable,
-} from "react-beautiful-dnd";
-import { v4 as uuidv4 } from "uuid";
+import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import {
   onBoardDragAndDrop,
   onCardDragAndDropInSameColumn,
@@ -20,11 +14,13 @@ import { getCards, getColumns } from "../utils/dataById";
 
 const BoardsSummary = dynamic(() => import("./BoardsSummary"), { ssr: false });
 
-interface IAppLayoutProps {
+interface IDragDropContextProviderProps {
   children: ReactNode;
 }
 
-export const AppLayout: FC<IAppLayoutProps> = ({ children }) => {
+export const DragDropContextProvider: FC<IDragDropContextProviderProps> = ({
+  children,
+}) => {
   const { route } = useRouter();
   const boards = useAppSelector((state) => state.boards);
   const dispatch = useAppDispatch();
@@ -34,13 +30,10 @@ export const AppLayout: FC<IAppLayoutProps> = ({ children }) => {
   const boardId = id as string;
 
   const handleDragAndDrop = (result: DropResult) => {
-    console.log({ dropResult: result });
     const { destination, source } = result;
 
     let dIndex = destination?.index as number;
     let sIndex = source.index;
-
-    console.log({ dIndex, sIndex });
 
     if (!destination) return;
     if (destination.droppableId === source.droppableId && dIndex === sIndex)
@@ -171,8 +164,6 @@ export const AppLayout: FC<IAppLayoutProps> = ({ children }) => {
   return (
     <DragDropContext onDragEnd={handleDragAndDrop}>
       <div className="min-h-screen bg-gray-800 text-gray-50 flex flex-col items-center md:flex-row-reverse ">
-        {/* for "md" and large */}
-
         <div
           className={`w-full ${
             route === "/boards" ? "w-3/4 sm:w-1/2 mx-auto" : "md:w-3/4 lg:w-4/5"
@@ -190,10 +181,7 @@ export const AppLayout: FC<IAppLayoutProps> = ({ children }) => {
             <BoardsSummary />
           </div>
         )}
-
-        {/* for smaller than "md" */}
       </div>
     </DragDropContext>
   );
 };
-// flex-row-reverse md:flex-col

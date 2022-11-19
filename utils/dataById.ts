@@ -1,5 +1,5 @@
 import { store } from "../app/store";
-import { Cards, Columns, IBoard, IColumn, ICard } from "../types/types";
+import { IBoard, IColumn, ICard } from "../types/types";
 
 function getBoard(boardId: string) {
   for (let board of store.getState().boards) {

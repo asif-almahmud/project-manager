@@ -1,5 +1,4 @@
 import { Boards, Columns } from "../../../types/types";
-import { current } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 const addNewColumn = (
@@ -14,13 +13,7 @@ const addNewColumn = (
   let newColumn = {
     id: action.payload.columnId,
     title: action.payload.columnTitle,
-    cards: [
-      // {
-      //   id: "",
-      //   title: "",
-      //   details: "",
-      // },
-    ],
+    cards: [],
   };
 
   state.forEach((item) => {

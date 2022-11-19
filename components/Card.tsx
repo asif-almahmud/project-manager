@@ -1,5 +1,4 @@
-import { Menu } from "@headlessui/react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch } from "../app/hooks";
 import { deleteCard, editCard } from "../features/boards/boardsSlice";
 import { ICard } from "../types/types";
@@ -48,7 +47,7 @@ export const Card = (props: ICardProps) => {
           <div className="flex items-start gap-1">
             <span className="mt-px">&#9737;</span>
             {!edit ? (
-              <div>{title}</div>
+              <div className="tracking-wide">{title}</div>
             ) : (
               <input
                 autoFocus

@@ -1,4 +1,4 @@
-import { Boards, IBoard } from "../../../types/types";
+import { Boards } from "../../../types/types";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 const addNewBoard = (
@@ -8,19 +8,7 @@ const addNewBoard = (
   let newBoard = {
     id: action.payload.boardId,
     title: action.payload.boardTitle,
-    columns: [
-      // {
-      //   id: "",
-      //   title: "",
-      //   cards: [
-      //     {
-      //       id: "",
-      //       title: "",
-      //       details: "",
-      //     },
-      //   ],
-      // },
-    ],
+    columns: [],
   };
   state.push(newBoard);
 };

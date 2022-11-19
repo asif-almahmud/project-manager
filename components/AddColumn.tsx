@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import { useAppDispatch } from "../app/hooks";
-import { IColumn } from "../types/types";
-import { Card } from "./Card";
 import { FaPlus } from "react-icons/fa";
 import { v4 as uuidv4 } from "uuid";
-import { type } from "os";
 import { addNewColumn } from "../features/boards/boardsSlice";
 
 interface IAddColumnProps {

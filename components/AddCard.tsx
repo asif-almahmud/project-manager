@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import { useAppDispatch } from "../app/hooks";
-import { ICard } from "../types/types";
-import { Card } from "./Card";
-import { FaPlus } from "react-icons/fa";
 import { v4 as uuidv4 } from "uuid";
-import { type } from "os";
 import { addNewCard } from "../features/boards/boardsSlice";
 
 interface IAddCardProps {
@@ -19,7 +15,6 @@ export const AddCard = (props: IAddCardProps) => {
   const dispatch = useAppDispatch();
   const [cardTitle, setCardTitle] = useState("");
   const [cardDetails, setCardDetails] = useState("");
-  // const [openForm, setOpenForm] = useState(false);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCardTitle(e.target.value);
@@ -38,7 +33,6 @@ export const AddCard = (props: IAddCardProps) => {
       cardTitle,
       cardDetails,
     };
-    console.log({ payload });
     dispatch(addNewCard(payload));
     setCardTitle("");
     setCardDetails("");
@@ -81,14 +75,6 @@ export const AddCard = (props: IAddCardProps) => {
               </form>
             </div>
           )}
-          {/* {!openForm && (
-            <div
-              className=" h-24 md:h-20 lg:h-24 xl:h-28 flex justify-center items-center  cursor-pointer text-[48px] text-gray-500 hover:border-gray-400 hover:text-gray-300"
-              onClick={() => setOpenForm(true)}
-            >
-              <FaPlus className="p-4 h-24 md:h-20 lg:h-24 xl:h-28" />
-            </div>
-          )} */}
         </>
       </div>
     </div>

@@ -12,9 +12,7 @@ export const Board = (props: IProps) => {
   return (
     <Link href={`/${id}`}>
       <a className="h-24 xl:h-28 flex justify-center items-center bg-gray-600 rounded-md cursor-pointer text-lg text-gray-300 drop-shadow-xl hover:bg-gray-500/80 active:bg-gray-600 ease-in-out duration-300">
-        {/* <div > */}
         {title}
-        {/* </div> */}
       </a>
     </Link>
   );

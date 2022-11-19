@@ -2,14 +2,7 @@ import React, { useEffect, useState } from "react";
 import { IColumn } from "../types/types";
 import { AddCard } from "./AddCard";
 import { Card } from "./Card";
-import {
-  DragDropContext,
-  DropResult,
-  Draggable,
-  Droppable,
-} from "react-beautiful-dnd";
-import { v4 as uuidv4 } from "uuid";
-import { Menu } from "@headlessui/react";
+import { Draggable, Droppable } from "react-beautiful-dnd";
 import { useAppDispatch } from "../app/hooks";
 import { deleteColumn, editColumn } from "../features/boards/boardsSlice";
 import { DropdownMenu } from "./DropdownMenu";
@@ -121,12 +114,6 @@ const DroppableCards = (props: IDroppableCardsProps) => {
                 </div>
               </h2>
               <div className=" flex flex-col gap-2 ">
-                {/* <AddCard
-                  boardId={boardId}
-                  columnId={columnId}
-                  openForm={openForm}
-                  setOpenForm={setOpenForm}
-                /> */}
                 {cards.map((card, index) => (
                   <div key={card.id}>
                     <Draggable draggableId={card.id} index={index}>

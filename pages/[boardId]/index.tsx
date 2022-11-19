@@ -1,12 +1,9 @@
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { AddColumn } from "../../components/AddColumn";
-import { AppLayout } from "../../components/AppLayout";
 import { useGetBoardById } from "../../hooks/useGetBoardById";
 import { MdDelete, MdEdit } from "react-icons/md";
 import { HiViewBoards } from "react-icons/hi";
-import { getBoard } from "../../utils/dataById";
 import { useAppDispatch } from "../../app/hooks";
 import { deleteBoard, editBoard } from "../../features/boards/boardsSlice";
 import { Modal } from "../../components/Modal";
@@ -103,8 +100,8 @@ const Board = () => {
               </>
             )}
           </div>
-          <Link href={`/boards`} className="block md:hidden">
-            <a className="block md:hidden">
+          <Link href={`/boards`}>
+            <a>
               <HiViewBoards className="block md:hidden mt-1 mr-4 w-8 h-8 p-2  rounded-full cursor-pointer text-sm text-gray-500 hover:bg-gray-200/30 hover:text-gray-100 rotate-90" />
             </a>
           </Link>

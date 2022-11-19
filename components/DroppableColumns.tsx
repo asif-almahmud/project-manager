@@ -1,16 +1,8 @@
 import React from "react";
-import {
-  DragDropContext,
-  DropResult,
-  Draggable,
-  Droppable,
-} from "react-beautiful-dnd";
+import { Draggable, Droppable } from "react-beautiful-dnd";
 import { IBoard } from "../types/types";
 import { AddColumn } from "./AddColumn";
-import { v4 as uuidv4 } from "uuid";
 import dynamic from "next/dynamic";
-import Column from "./Column";
-// import DroppableCards from "./DroppableCards";
 
 const DroppableCards = dynamic(() => import("./DroppableCards"), {
   ssr: false,
@@ -59,7 +51,6 @@ const DroppableColumns = (props: IDroppableColumnsProps) => {
                           : ""
                       }`}
                     >
-                      {/* <Column boardId={boardId} {...column} /> */}
                       <DroppableCards boardId={boardId} {...column} />
                     </div>
                   )}

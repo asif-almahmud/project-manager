@@ -1,17 +1,9 @@
 import React from "react";
 import { Board } from "./Board";
 import { AddBoard } from "./AddBoard";
-import {
-  DragDropContext,
-  DropResult,
-  Draggable,
-  Droppable,
-} from "react-beautiful-dnd";
+import { Draggable, Droppable } from "react-beautiful-dnd";
 import { v4 as uuidv4 } from "uuid";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-// import { onBoardDragAndDrop } from "../../features/boards/boardsSlice";
-// import { Boards } from "../../types/types";
-// import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 type Props = {};
 
@@ -20,8 +12,6 @@ const BoardsSummary = (props: Props) => {
   const dispatch = useAppDispatch();
 
   return (
-    // "droppableId" is like naming the droppable area
-
     <Droppable droppableId="BoardsList">
       {(doppableProvided, droppableSnapshot) => (
         <div

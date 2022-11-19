@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useAppSelector } from "../app/hooks";
 import { IBoard } from "../types/types";
 
