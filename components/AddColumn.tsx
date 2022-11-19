@@ -28,7 +28,7 @@ export const AddColumn = (props: IAddColumnProps) => {
   };
 
   return (
-    <div className="w-48 flex flex-col items-center gap-2">
+    <div className="w-56 flex flex-col items-center gap-2">
       <div className="w-full border border-gray-500 rounded-md hover:border-gray-400">
         <>
           {openForm && (

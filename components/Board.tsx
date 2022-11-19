@@ -11,10 +11,10 @@ export const Board = (props: IProps) => {
 
   return (
     <Link href={`/${id}`}>
-      <a>
-        <div className="w-11/12 h-24 md:20 xl:h-28 flex justify-center items-center bg-gray-600 rounded-md cursor-pointer text-lg text-gray-300 drop-shadow-xl active:bg-gray-600/80">
-          {title}
-        </div>
+      <a className="h-24 xl:h-28 flex justify-center items-center bg-gray-600 rounded-md cursor-pointer text-lg text-gray-300 drop-shadow-xl hover:bg-gray-500/80 active:bg-gray-600 ease-in-out duration-300">
+        {/* <div > */}
+        {title}
+        {/* </div> */}
       </a>
     </Link>
   );

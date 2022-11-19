@@ -25,17 +25,17 @@ const initialState: Boards = [
     id: "1",
     title: "Poject1",
     columns: [
-      {
-        id: "1",
-        title: "Backlog",
-        cards: [
-          {
-            id: "1",
-            title: "Initial Setup",
-            details: "MERN Stack with TypeScript, Nextjs and Redux Toolkit",
-          },
-        ],
-      },
+      // {
+      //   id: "1",
+      //   title: "Backlog",
+      //   cards: [
+      //     {
+      //       id: "1",
+      //       title: "Initial Setup",
+      //       details: "MERN Stack with TypeScript, Nextjs and Redux Toolkit",
+      //     },
+      //   ],
+      // },
     ],
   },
 ];

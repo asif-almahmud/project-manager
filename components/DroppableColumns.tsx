@@ -40,7 +40,7 @@ const DroppableColumns = (props: IDroppableColumnsProps) => {
               : ""
           }`}
         >
-          <div className="h-[80vh] ml-8 flex flex-nowrap gap-12 items-start ">
+          <div className="h-[80vh] ml-8 flex flex-nowrap gap-8 items-start ">
             {board?.columns?.length > 0 &&
               board?.columns?.map((column, index) => (
                 <Draggable
@@ -53,7 +53,7 @@ const DroppableColumns = (props: IDroppableColumnsProps) => {
                       ref={draggableProvided.innerRef}
                       {...draggableProvided.draggableProps}
                       {...draggableProvided.dragHandleProps}
-                      className={`relative min-w-48 h-[95%]  border drop-shadow-2xl border-gray-500 bg-gray-600 rounded-md  cursor-grabbing ${
+                      className={`relative w-56 h-[95%]  border drop-shadow-2xl border-gray-500 bg-gray-600 rounded-md  cursor-grabbing ${
                         draggableSnapshot.isDragging
                           ? "drop-shadow-2xl border-gray-300 cursor-grabbing"
                           : ""

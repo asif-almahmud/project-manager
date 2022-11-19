@@ -14,6 +14,7 @@ import { useAppDispatch } from "../app/hooks";
 import { deleteColumn, editColumn } from "../features/boards/boardsSlice";
 import { DropdownMenu } from "./DropdownMenu";
 import { Modal } from "./Modal";
+import { FaPlus } from "react-icons/fa";
 
 interface IDroppableCardsProps extends IColumn {
   boardId: string;
@@ -24,6 +25,7 @@ const DroppableCards = (props: IDroppableCardsProps) => {
   const [edit, setEdit] = useState(false);
   const [columnTitle, setColumnTitle] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [openForm, setOpenForm] = useState(false);
   const dispatch = useAppDispatch();
 
   const handleSave = () => {
@@ -64,15 +66,16 @@ const DroppableCards = (props: IDroppableCardsProps) => {
           <div
             ref={droppableProvided.innerRef}
             {...droppableProvided.droppableProps}
-            className={` min-w-48 h-[100%] overflow-y-auto overflow-x-hidden border-gray-500 rounded-md  ${
+            className={`min-w-48 h-[100%] overflow-y-auto overflow-x-hidden border-gray-500 rounded-md  ${
               droppableSnapshot.isDraggingOver
                 ? "outline outline-1 outline-gray-300  rounded-md"
                 : ""
             }`}
           >
-            <div className="p-2  md:w-56 flex flex-col justify-center  gap-4">
+            <div className="w-48" />
+            <div className="px-2 pb-2 flex flex-col justify-center  gap-4">
               <h2
-                className={`sticky top-0 w-full text-gray-200 border-b border-gray-500 font-semibold bg-gray-600 flex justify-between${
+                className={`z-10 py-2 sticky top-0 w-full text-gray-200 border-b border-gray-500 font-semibold bg-gray-600 flex justify-between${
                   droppableSnapshot.isDraggingOver
                     ? " border-b-2 text-white border-gray-200 "
                     : ""
@@ -81,7 +84,7 @@ const DroppableCards = (props: IDroppableCardsProps) => {
                 {!edit ? (
                   <div>{title}</div>
                 ) : (
-                  <div className="flex flex-col gap-2 m-2">
+                  <div className="flex flex-col gap-3 m-2">
                     <input
                       autoFocus
                       type="text"
@@ -105,13 +108,25 @@ const DroppableCards = (props: IDroppableCardsProps) => {
                     </div>
                   </div>
                 )}
+                <div className="flex justify-center items-center ">
+                  <FaPlus
+                    onClick={() => setOpenForm(true)}
+                    className=" w-6 h-6 p-[5px]  rounded-full cursor-pointer text-sm text-gray-400 hover:bg-gray-200/30 hover:text-gray-100"
+                  />
 
-                <DropdownMenu
-                  setEdit={setEdit}
-                  setShowModalBeforeDelete={setShowModal}
-                />
+                  <DropdownMenu
+                    setEdit={setEdit}
+                    setShowModalBeforeDelete={setShowModal}
+                  />
+                </div>
               </h2>
               <div className=" flex flex-col gap-2 ">
+                {/* <AddCard
+                  boardId={boardId}
+                  columnId={columnId}
+                  openForm={openForm}
+                  setOpenForm={setOpenForm}
+                /> */}
                 {cards.map((card, index) => (
                   <div key={card.id}>
                     <Draggable draggableId={card.id} index={index}>
@@ -135,7 +150,12 @@ const DroppableCards = (props: IDroppableCardsProps) => {
                   </div>
                 ))}
                 {droppableProvided.placeholder}
-                <AddCard boardId={boardId} columnId={columnId} />
+                <AddCard
+                  boardId={boardId}
+                  columnId={columnId}
+                  openForm={openForm}
+                  setOpenForm={setOpenForm}
+                />
               </div>
             </div>
           </div>

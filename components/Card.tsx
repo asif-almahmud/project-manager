@@ -39,12 +39,11 @@ export const Card = (props: ICardProps) => {
 
   return (
     <>
-      <Modal
-        show={showModal}
-        setShow={setShowModal}
-        handleDelete={handleDelete}
-      />
-      <div className=" border border-gray-500 rounded-md p-2 text-white  bg-gray-700 cursor-grabbing hover:border-gray-300 flex flex-col gap-2">
+      <div
+        className={`border border-gray-500 rounded-md p-2 text-white  bg-gray-700 cursor-grabbing hover:border-gray-300 flex flex-col gap-2 ${
+          edit ? "py-4 gap-4" : ""
+        }`}
+      >
         <h2 className="font-semibold text-blue-200 flex items-start justify-between gap-1 ">
           <div className="flex items-start gap-1">
             <span className="mt-px">&#9737;</span>
@@ -57,7 +56,7 @@ export const Card = (props: ICardProps) => {
                 type="text"
                 value={cardTitle}
                 onChange={(e) => setCardTitle(e.target.value)}
-                className="w-[100%] rounded-sm text-gray-700 font-normal px-1"
+                className="w-[100%] rounded-sm text-gray-700 font-normal px-1 text-base p-1"
               />
             )}
           </div>
@@ -74,7 +73,7 @@ export const Card = (props: ICardProps) => {
               <textarea
                 value={cardDetails}
                 onChange={(e) => setCardDetails(e.target.value)}
-                className="w-[100%] text-[13px] p-2   rounded-sm text-gray-700 font-normal px-1"
+                className="w-[100%] text-sm p-2   rounded-sm text-gray-700 font-normal px-1"
               />
             )}
           </p>
@@ -93,6 +92,11 @@ export const Card = (props: ICardProps) => {
           </div>
         )}
       </div>
+      <Modal
+        show={showModal}
+        setShow={setShowModal}
+        handleDelete={handleDelete}
+      />
     </>
   );
 };

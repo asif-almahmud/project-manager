@@ -18,16 +18,14 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { getCards, getColumns } from "../utils/dataById";
 
-const BoardsSummary = dynamic(
-  () => import("../features/boards/BoardsSummary"),
-  { ssr: false }
-);
+const BoardsSummary = dynamic(() => import("./BoardsSummary"), { ssr: false });
 
 interface IAppLayoutProps {
   children: ReactNode;
 }
 
 export const AppLayout: FC<IAppLayoutProps> = ({ children }) => {
+  const { route } = useRouter();
   const boards = useAppSelector((state) => state.boards);
   const dispatch = useAppDispatch();
   const {
@@ -175,15 +173,23 @@ export const AppLayout: FC<IAppLayoutProps> = ({ children }) => {
       <div className="min-h-screen bg-gray-800 text-gray-50 flex flex-col items-center md:flex-row-reverse ">
         {/* for "md" and large */}
 
-        <div className={`w-full md:w-3/4 lg:w-4/5 `}>{children}</div>
-
         <div
-          className={`${
-            boardId ? "hidden md:block" : ""
-          } w-4/5 sm:w-3/5 md:w-1/4 lg:w-1/5 p-8 pt-0 md:p-0  md:block md:border-r border-r-gray-400 md:overflow-y-auto md:overflow-x-hidden`}
+          className={`w-full ${
+            route === "/boards" ? "w-3/4 sm:w-1/2 mx-auto" : "md:w-3/4 lg:w-4/5"
+          } `}
         >
-          <BoardsSummary />
+          {children}
         </div>
+
+        {route !== "/boards" && (
+          <div
+            className={`${
+              boardId ? "hidden md:block" : ""
+            } w-4/5 sm:w-3/5 md:w-1/4 lg:w-1/5 md:block md:border-r-[1px] border-r-gray-500 md:overflow-y-auto md:overflow-x-hidden`}
+          >
+            <BoardsSummary />
+          </div>
+        )}
 
         {/* for smaller than "md" */}
       </div>

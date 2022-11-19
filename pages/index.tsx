@@ -1,11 +1,11 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import dynamic from "next/dynamic";
-import { order, restock } from "../features/cake/cakeSlice";
-import {
-  order as orderIcecream,
-  restock as restockIcecream,
-} from "../features/icecream/icecreamSlice";
+// import { order, restock } from "../features/cake/cakeSlice";
+// import {
+//   order as orderIcecream,
+//   restock as restockIcecream,
+// } from "../features/icecream/icecreamSlice";
 import type { RootState } from "../app/store";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import Image from "next/image";
@@ -17,10 +17,10 @@ import { onBoardDragAndDrop } from "../features/boards/boardsSlice";
 import { Boards } from "../types/types";
 import { AppLayout } from "../components/AppLayout";
 
-const BoardsSummary = dynamic(
-  () => import("../features/boards/BoardsSummary"),
-  { ssr: false }
-);
+// const BoardsSummary = dynamic(
+//   () => import("../features/boards/BoardsSummary"),
+//   { ssr: false }
+// );
 
 const selectValue = (state: RootState) => [];
 
@@ -47,17 +47,24 @@ const Home: NextPage = () => {
           Progress with Progressivo
         </h1>
         <ul className="text-md italic text-blue-300 list-disc ml-6">
-          <li>Break a project or a work into small tasks</li>
-
-          <li>Add new task or remove if needed</li>
+          <li>Your one-stop project manager</li>
 
           <li>
-            Move the tasks to different lifecycle states ( task columns ) using
-            drag and drop
+            Create a project, add state defining columns and add new tasks to
+            them when required
+          </li>
+
+          <li>
+            Move the tasks between different states ( columns ) using drag and
+            drop
           </li>
           <li>
-            If needed use drag and drop to reorder the boards and columns also.
+            If needed use drag and drop to reorder the boards and columns also
           </li>
+          {/* <li>
+            One setback - this app usage local storage ( 5mb ) for storing the
+            data
+          </li> */}
         </ul>
       </div>
       {/* </AppLayout> */}

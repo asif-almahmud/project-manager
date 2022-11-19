@@ -10,14 +10,16 @@ import { addNewCard } from "../features/boards/boardsSlice";
 interface IAddCardProps {
   boardId: string;
   columnId: string;
+  openForm: boolean;
+  setOpenForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const AddCard = (props: IAddCardProps) => {
-  const { boardId, columnId } = props;
+  const { boardId, columnId, openForm, setOpenForm } = props;
   const dispatch = useAppDispatch();
   const [cardTitle, setCardTitle] = useState("");
   const [cardDetails, setCardDetails] = useState("");
-  const [openForm, setOpenForm] = useState(false);
+  // const [openForm, setOpenForm] = useState(false);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCardTitle(e.target.value);
@@ -44,8 +46,8 @@ export const AddCard = (props: IAddCardProps) => {
   };
 
   return (
-    <div className=" border border-gray-500 rounded-md text-white  bg-gray-700  hover:border-gray-300 flex flex-col gap-px">
-      <div className="w-full ">
+    <div className="  border-gray-500 rounded-md text-white  bg-gray-700  hover:border-gray-300 flex flex-col gap-px">
+      <div className=" ">
         <>
           {openForm && (
             <div className=" p-2 pt-4 min-h-24 md:min-h-20 lg:min-h-24 xl:min-h-28 text-lg text-gray-300">
@@ -60,33 +62,33 @@ export const AddCard = (props: IAddCardProps) => {
                   value={cardTitle}
                   onChange={handleTitleChange}
                   required
-                  className="w-4/5 self-center bg-gray-500 px-2 rounded-md text-white focus:outline focus:outline-2 focus:outline-green-400 focus:border-none h-6 lg:h-auto"
+                  className="w-5/6 self-center bg-gray-500/80 px-2 rounded-md text-white focus:outline focus:outline-2 focus:outline-green-400 focus:border-none h-6 lg:h-auto text-base p-1"
                 />
                 <textarea
                   cols={50}
-                  rows={2}
+                  rows={3}
                   value={cardDetails}
                   onChange={handleDetailsChange}
                   placeholder="Details..."
-                  className="w-4/5 self-center bg-gray-500 px-2 rounded-md text-white focus:outline focus:outline-2 focus:outline-green-400 focus:border-none h-6 lg:h-auto"
+                  className="w-5/6 self-center bg-gray-500/80 px-2 rounded-md text-white focus:outline focus:outline-2 focus:outline-green-400 focus:border-none h-6 lg:h-auto text-base p-1"
                 ></textarea>
 
                 <input
                   type="submit"
                   value="Submit"
-                  className="w-4/5 self-center cursor-pointer"
+                  className="w-5/6 self-center cursor-pointer"
                 />
               </form>
             </div>
           )}
-          {!openForm && (
+          {/* {!openForm && (
             <div
               className=" h-24 md:h-20 lg:h-24 xl:h-28 flex justify-center items-center  cursor-pointer text-[48px] text-gray-500 hover:border-gray-400 hover:text-gray-300"
               onClick={() => setOpenForm(true)}
             >
               <FaPlus className="p-4 h-24 md:h-20 lg:h-24 xl:h-28" />
             </div>
-          )}
+          )} */}
         </>
       </div>
     </div>

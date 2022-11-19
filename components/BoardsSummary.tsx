@@ -8,9 +8,10 @@ import {
   Droppable,
 } from "react-beautiful-dnd";
 import { v4 as uuidv4 } from "uuid";
-import { onBoardDragAndDrop } from "../../features/boards/boardsSlice";
-import { Boards } from "../../types/types";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+// import { onBoardDragAndDrop } from "../../features/boards/boardsSlice";
+// import { Boards } from "../../types/types";
+// import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 type Props = {};
 
@@ -26,9 +27,9 @@ const BoardsSummary = (props: Props) => {
         <div
           ref={doppableProvided.innerRef}
           {...doppableProvided.droppableProps}
-          className={`md:h-screen overflow-y-auto p-6 pb-24 flex flex-col flex-nowrap gap-6  ${
+          className={`md:h-screen overflow-y-auto p-8 pb-24 flex flex-col flex-nowrap gap-6  ${
             droppableSnapshot.isDraggingOver
-              ? "bg-gray-700 border-2 border-gray-200 rounded-sm overflow-hidden"
+              ? "bg-gray-700 border-1 border-gray-200 rounded-sm overflow-hidden"
               : ""
           }`}
         >
