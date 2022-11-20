@@ -33,10 +33,10 @@ export const DropdownMenu = (props: IDropdownMenuProps) => {
       </div>
 
       {showMenuItems && (
-        <div className="absolute right-[2px] top-[22px]  w-24 rounded-sm bg-white   divide-y divide-gray-200 focus:outline-none  drop-shadow-md">
+        <div className="absolute right-[2px] top-[22px]  w-24 rounded-sm bg-white   divide-y divide-gray-200 focus:outline-none  drop-shadow-md  z-50">
           <div>
             <div
-              className="rounded-sm text-gray-700 text-center cursor-pointer bg-gray-100 hover:bg-gray-200 font-normal text-sm"
+              className="py-2 rounded-sm text-gray-700 text-center cursor-pointer bg-gray-100 hover:bg-gray-200 font-normal text-sm"
               onClick={() => {
                 setEdit(true);
                 setShowMenuItems(false);
@@ -47,7 +47,7 @@ export const DropdownMenu = (props: IDropdownMenuProps) => {
           </div>
           <div>
             <div
-              className="rounded-sm text-gray-700 text-center cursor-pointer bg-gray-100 hover:bg-gray-200 font-normal text-sm"
+              className="py-2 rounded-sm text-gray-700 text-center cursor-pointer bg-gray-100 hover:bg-gray-200 font-normal text-sm"
               onClick={() => setShowModalBeforeDelete(true)}
             >
               Delete
