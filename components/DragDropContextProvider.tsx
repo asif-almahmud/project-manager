@@ -1,6 +1,7 @@
-import React, { ReactNode, FC } from "react";
+import React, { ReactNode, FC, useEffect, useState } from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import {
+  updateBoards,
   onBoardDragAndDrop,
   onCardDragAndDropInSameColumn,
   onCardDragAndDropIntoDifferentColumns,
@@ -11,6 +12,7 @@ import { useAppDispatch, useAppSelector } from "../app/hooks";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { getCards, getColumns } from "../utils/dataById";
+import { setLocalValue, getLocalValue } from "../utils/localValues";
 
 const BoardsSummary = dynamic(() => import("./BoardsSummary"), { ssr: false });
 
@@ -21,11 +23,15 @@ interface IDragDropContextProviderProps {
 export const DragDropContextProvider: FC<IDragDropContextProviderProps> = ({
   children,
 }) => {
-  const { route } = useRouter();
-  const boards = useAppSelector((state) => state.boards);
+  const [boards, setBoards] = useState([] as Boards);
+  const [renderCount, setRenderCount] = useState(1);
+
+  const appState = useAppSelector((state) => state);
+
   const dispatch = useAppDispatch();
   const {
     query: { boardId: id },
+    route,
   } = useRouter();
   const boardId = id as string;
 
@@ -160,6 +166,29 @@ export const DragDropContextProvider: FC<IDragDropContextProviderProps> = ({
       }
     }
   };
+
+  useEffect(() => {
+    if (renderCount < 2) {
+      let parsedValue = getLocalValue("progressivo_state") as Boards | null;
+      if (!parsedValue) {
+        setLocalValue("progressivo_state", appState.boards);
+        setBoards(appState.boards);
+      } else {
+        console.log({ boards: parsedValue });
+        dispatch(updateBoards({ boards: parsedValue }));
+        setBoards(parsedValue);
+      }
+    }
+
+    setRenderCount((prev) => prev + 1);
+  }, []);
+
+  useEffect(() => {
+    if (renderCount > 1) {
+      setLocalValue("progressivo_state", appState.boards);
+      setBoards(appState.boards);
+    }
+  }, [appState]);
 
   return (
     <DragDropContext onDragEnd={handleDragAndDrop}>

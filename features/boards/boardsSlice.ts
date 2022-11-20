@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Boards } from "../../types/types";
+import { updateBoards as updateBoardsFromLocalStorage } from "./actionCreators/localState";
 import {
   addNewBoard as addBoard,
   editBoard as updateBoard,
@@ -32,8 +33,7 @@ const initialState: Boards = [
           {
             id: "1",
             title: "Initial Setup",
-            details:
-              "For ABC application with TypeScript, Nextjs and Redux Toolkit",
+            details: "Setup a Nextjs app with TypeScript and Redux Toolkit",
           },
         ],
       },
@@ -45,6 +45,7 @@ export const boardsSlice = createSlice({
   name: "boards",
   initialState,
   reducers: {
+    updateBoards: updateBoardsFromLocalStorage,
     addNewBoard: addBoard,
     deleteBoard: removeBoard,
     editBoard: updateBoard,
@@ -63,6 +64,7 @@ export const boardsSlice = createSlice({
 });
 
 export const {
+  updateBoards,
   addNewBoard,
   editBoard,
   deleteBoard,

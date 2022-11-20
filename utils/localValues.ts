@@ -5,7 +5,7 @@ export const localValues = {
   },
   get: (key: string): any => {
     // this will return the value for the given key
-    return JSON.parse(localStorage.getItem(key)!);
+    return JSON.parse(localStorage.getItem(key) as string);
   },
   remove: (key: string) => {
     // this will remove the specific key:value pair from the localStorage
@@ -19,4 +19,13 @@ export const localValues = {
     // this will retun an array of all the keys of the localStorage
     return Object.keys(localStorage);
   },
+};
+
+export const setLocalValue = <T>(key: string, value: T) => {
+  localStorage.setItem(key, JSON.stringify(value));
+};
+
+export const getLocalValue = (key: string) => {
+  const value = localStorage.getItem(key);
+  return value ? JSON.parse(value) : null;
 };
