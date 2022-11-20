@@ -116,7 +116,7 @@ const DroppableCards = (props: IDroppableCardsProps) => {
               <div className=" flex flex-col gap-2 ">
                 {cards.map((card, index) => (
                   <div key={card.id}>
-                    <Draggable draggableId={card.id} index={index}>
+                    <Draggable draggableId={card.id + card.title} index={index}>
                       {(draggableProvided, draggableSnapshot) => (
                         <div
                           ref={draggableProvided.innerRef}

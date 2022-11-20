@@ -23,10 +23,13 @@ interface IDragDropContextProviderProps {
 export const DragDropContextProvider: FC<IDragDropContextProviderProps> = ({
   children,
 }) => {
-  const [boards, setBoards] = useState([] as Boards);
   const [renderCount, setRenderCount] = useState(1);
 
   const appState = useAppSelector((state) => state);
+  let boards = [] as Boards;
+  if (renderCount > 1) {
+    boards = appState.boards;
+  }
 
   const dispatch = useAppDispatch();
   const {
@@ -121,7 +124,6 @@ export const DragDropContextProvider: FC<IDragDropContextProviderProps> = ({
           }
         }
 
-        console.log("in the same column");
         dispatch(
           onCardDragAndDropInSameColumn({
             boardId,
@@ -172,11 +174,9 @@ export const DragDropContextProvider: FC<IDragDropContextProviderProps> = ({
       let parsedValue = getLocalValue("progressivo_state") as Boards | null;
       if (!parsedValue) {
         setLocalValue("progressivo_state", appState.boards);
-        setBoards(appState.boards);
       } else {
         console.log({ boards: parsedValue });
         dispatch(updateBoards({ boards: parsedValue }));
-        setBoards(parsedValue);
       }
     }
 
@@ -186,7 +186,6 @@ export const DragDropContextProvider: FC<IDragDropContextProviderProps> = ({
   useEffect(() => {
     if (renderCount > 1) {
       setLocalValue("progressivo_state", appState.boards);
-      setBoards(appState.boards);
     }
   }, [appState]);
 
@@ -207,7 +206,7 @@ export const DragDropContextProvider: FC<IDragDropContextProviderProps> = ({
               boardId ? "hidden md:block" : ""
             } w-4/5 sm:w-3/5 md:w-1/4 lg:w-1/5 md:block md:border-r-[1px] border-r-gray-500 md:overflow-y-auto md:overflow-x-hidden`}
           >
-            <BoardsSummary />
+            <BoardsSummary boards={boards} />
           </div>
         )}
       </div>

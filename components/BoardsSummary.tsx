@@ -4,12 +4,15 @@ import { AddBoard } from "./AddBoard";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import { v4 as uuidv4 } from "uuid";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { Boards } from "../types/types";
 
-type Props = {};
+interface IBoardSummary {
+  boards: Boards;
+}
 
-const BoardsSummary = (props: Props) => {
-  const boards = useAppSelector((state) => state.boards);
-  const dispatch = useAppDispatch();
+const BoardsSummary = ({ boards }: IBoardSummary) => {
+  // const boards = useAppSelector((state) => state.boards);
+  // const dispatch = useAppDispatch();
 
   return (
     <Droppable droppableId="BoardsList">
@@ -17,17 +20,17 @@ const BoardsSummary = (props: Props) => {
         <div
           ref={doppableProvided.innerRef}
           {...doppableProvided.droppableProps}
-          className={`md:h-screen overflow-y-auto p-8 pb-24 flex flex-col flex-nowrap gap-6  ${
+          className={` md:h-screen overflow-y-auto p-8 pb-24 flex flex-col flex-nowrap gap-6  ${
             droppableSnapshot.isDraggingOver
               ? "bg-gray-700 border-1 border-gray-200 rounded-sm overflow-hidden"
               : ""
           }`}
         >
-          {boards.map((board, index) => (
+          {boards?.map((board, index) => (
             <Draggable
-              draggableId={board.title + index}
+              draggableId={board.id + board.title}
               index={index}
-              key={uuidv4()}
+              key={board.id}
             >
               {(draggableProvided, draggableSnapshot) => (
                 <div

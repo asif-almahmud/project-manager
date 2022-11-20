@@ -36,7 +36,7 @@ const DroppableColumns = (props: IDroppableColumnsProps) => {
             {board?.columns?.length > 0 &&
               board?.columns?.map((column, index) => (
                 <Draggable
-                  draggableId={column.title + column.id + index}
+                  draggableId={column.id + column.title}
                   index={index}
                   key={column.id}
                 >
